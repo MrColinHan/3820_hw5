@@ -54,6 +54,7 @@ let rec filter p l =
 
 
 (* vsum : (float * float) list -> float * float *)
+
 let take_x (t: (float * float)) : float = 
   match t with 
   | (x , y) -> x
@@ -65,16 +66,19 @@ let take_y (t: (float * float)) : float =
 let addf (x : float) (y : float) : float = 
   x + y
 
-//map take_x [(9.8,6.1);(3.5,8.2);(0.4,0.01);(1.2,5.7)]
-//foldL add 0.0 (map take_x [(2.0,6.0);(3.0,8.0);(0.4,0.01);(1.0,5.7)])
 
 let vsum (l: (float * float) list) : float * float = 
   match l with 
   | h :: t -> ( (foldL addf 0.0 (map take_x l)) , (foldL addf 0.0 (map take_y l)))
   | []     -> failwith "The input list is empty"
 
-// vsum [(9.8,6.1);(3.5,8.2);(0.4,0.01);(1.2,5.7)]
-// vsum [(1.2,4.5)]
+//Tests:
+//map take_x [(9.8,6.1);(3.5,8.2);(0.4,0.01);(1.2,5.7)]
+//foldL add 0.0 (map take_x [(2.0,6.0);(3.0,8.0);(0.4,0.01);(1.0,5.7)])
+//vsum [(9.8,6.1);(3.5,8.2);(0.4,0.01);(1.2,5.7)]
+//vsum [(1.2,4.5)]
+//vsum []
+
 
 (* length : ’a list -> int *)
 
@@ -85,15 +89,15 @@ let convert_to_one l =
 let addi (x : int) (y : int) : int = 
   x + y
 
-//map convert_to_one [3;7;8;5;7;3]
-//map convert_to_one ['y';'3']
-// foldL addi 0 (map convert_to_one [])
-
 let length l : int = 
   match l with 
   | []     -> 0
   | h :: t -> foldL addi 0 (map convert_to_one l)
 
+//Tests: 
+//map convert_to_one [3;7;8;5;7;3]
+//map convert_to_one ['y';'3']
+//foldL addi 0 (map convert_to_one [])
 //length [0;0;0;0;0]
 
 (* llength : ’a list list -> int list *)
@@ -103,14 +107,34 @@ let llength l =
   | []     -> []
   | h :: t -> map length l
 
-llength [[1];[3;3;3];[2;2];[5;5;5;5;5];[]]
-llength []
+//Tests: 
+//llength [[1];[3;3;3];[2;2];[5;5;5;5;5];[]]
+//llength []
+//llength [[]]
 
 (* remove : ’a -> (’a list -> ’a list) when ’a : equality *)
 
+let remove v l = 
+  filter (fun x -> x <> v) l
+//Tests: 
+//remove 3 [1;2;3;4;5;3;6;3;7;33;9]
+//remove 1 []
+//remove 1 [1;1;1]
 
 (* lmin : ’a list -> ’a when 'a : comparison *)
 
+let min x y = 
+  if x < y then x else y
+// min "dog" "cat"
+
+let lmin l = 
+  match l with 
+  | [] -> failwith "List is empty" (* failwith not working!!!*)
+  | h :: t -> foldL min h t
+// Tests:
+//lmin []
+//lmin [3; 5; 1; 7]
+//lmin ["dog"; "jet"; "cat"; "jar"]
 
 (* isIn : ’a -> (’a list -> bool) when ’a : equality *)
 
