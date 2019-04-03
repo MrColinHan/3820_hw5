@@ -98,6 +98,13 @@ let length l : int =
 
 (* llength : ’a list list -> int list *)
 
+let llength l = 
+  match l with 
+  | []     -> []
+  | h :: t -> map length l
+
+llength [[1];[3;3;3];[2;2];[5;5;5;5;5];[]]
+llength []
 
 (* remove : ’a -> (’a list -> ’a list) when ’a : equality *)
 
