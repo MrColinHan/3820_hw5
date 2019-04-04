@@ -102,7 +102,7 @@ let length (l : 'a list) : int =
 
 (* llength : ’a list list -> int list *)
 
-let llength l : int list = 
+let llength (l: 'a list list) : int list = 
   match l with 
   | []     -> []
   | h :: t -> map length l
@@ -114,7 +114,7 @@ let llength l : int list =
 
 (* remove : ’a -> (’a list -> ’a list) when ’a : equality *)
 
-let remove (v: 'a) (l: 'a list) : 'a list = 
+let remove (v: 'a) (l: 'a list) : 'a list =   // ??????????????? does '()' matter in the type
   filter (fun x -> x <> v) l
 //Tests: 
 //remove 3 [1;2;3;4;5;3;6;3;7;33;9]
@@ -129,7 +129,7 @@ let min (x: 'a) (y: 'a) : 'a=
 
 let lmin (l: 'a list) = 
   match l with 
-  | [] -> failwith "List is empty"    (* failwith not working!!!*)
+  | [] -> failwith "List is empty"    // ?????????????????????failwith not working!!!
   | h :: t -> foldL min h t
 // Tests:
 //lmin []
@@ -151,10 +151,17 @@ let isIn (x : 'a) (l : 'a list) : bool=
 let leven (l: int list) : bool= 
   all even l
 
-//Tests
+//Tests:
 //leven [2;4;6;8;0;-6;-2]
 //leven [8;6;-9;-1]
 
 (* append : ’a list -> ’a list -> ’a list *)
 
+let append_x_to_l (x: 'a) (l: 'a list) : 'a list = 
+  x :: l
+//append_x_to_l 1 [2;3]
+let append (xl: 'a list) (yl: 'a list) : 'a list= 
+  foldR append_x_to_l xl yl 
+//Tests:
+//append [1;2;3] [4;5;6]
 
