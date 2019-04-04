@@ -144,10 +144,16 @@ let equal x y =
 let isIn (x : 'a) (l : 'a list) : bool=
   some (equal x) l
 //Tests: 
-//isIn 7 [1;2;3;4;5;6]
+//isIn 2 [1;2;3;4;5;6]
+//isIn 2 []
 
 (* leven : int list -> bool *)
+let leven (l: int list) : bool= 
+  all even l
 
+//Tests
+//leven [2;4;6;8;0;-6;-2]
+//leven [8;6;-9;-1]
 
 (* append : ’a list -> ’a list -> ’a list *)
 
