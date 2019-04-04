@@ -89,7 +89,7 @@ let convert_to_one l =
 let addi (x : int) (y : int) : int = 
   x + y
 
-let length l : int = 
+let length (l : 'a list) : int = 
   match l with 
   | []     -> 0
   | h :: t -> foldL addi 0 (map convert_to_one l)
@@ -97,12 +97,12 @@ let length l : int =
 //Tests: 
 //map convert_to_one [3;7;8;5;7;3]
 //map convert_to_one ['y';'3']
-//foldL addi 0 (map convert_to_one [])
+//length []
 //length [0;0;0;0;0]
 
 (* llength : ’a list list -> int list *)
 
-let llength l = 
+let llength l : int list = 
   match l with 
   | []     -> []
   | h :: t -> map length l
@@ -114,7 +114,7 @@ let llength l =
 
 (* remove : ’a -> (’a list -> ’a list) when ’a : equality *)
 
-let remove v l = 
+let remove (v: 'a) (l: 'a list) : 'a list = 
   filter (fun x -> x <> v) l
 //Tests: 
 //remove 3 [1;2;3;4;5;3;6;3;7;33;9]
@@ -123,21 +123,28 @@ let remove v l =
 
 (* lmin : ’a list -> ’a when 'a : comparison *)
 
-let min x y = 
+let min (x: 'a) (y: 'a) : 'a= 
   if x < y then x else y
 // min "dog" "cat"
 
-let lmin l = 
+let lmin (l: 'a list) = 
   match l with 
-  | [] -> failwith "List is empty" (* failwith not working!!!*)
+  | [] -> failwith "List is empty"    (* failwith not working!!!*)
   | h :: t -> foldL min h t
 // Tests:
 //lmin []
-//lmin [3; 5; 1; 7]
+//lmin [3; 5; 1; -1; 7]
 //lmin ["dog"; "jet"; "cat"; "jar"]
 
 (* isIn : ’a -> (’a list -> bool) when ’a : equality *)
 
+let equal x y = 
+  if x = y then true else false
+
+let isIn (x : 'a) (l : 'a list) : bool=
+  some (equal x) l
+//Tests: 
+//isIn 7 [1;2;3;4;5;6]
 
 (* leven : int list -> bool *)
 
