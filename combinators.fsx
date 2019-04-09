@@ -3,7 +3,8 @@
    
    Homework 5
 
-   Team:  
+   Team:  Changze Han   50
+          Kwunming Pang 50
 *)
 
 (* even : int -> bool *)
